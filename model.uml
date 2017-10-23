@@ -6,6 +6,10 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_lAE5QLgdEeekTazOcBWwtg" name="EmergencyDepartment"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_tYv0YLgdEeekTazOcBWwtg" name="HealthService"/>
+<<<<<<< Updated upstream
   <packagedElement xmi:type="uml:Class" xmi:id="_C2QSQLgzEeeXI46qMZ41PQ" name="Physician"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_wszkILgzEeeXI46qMZ41PQ" name="Physician"/>
+=======
+  <packagedElement xmi:type="uml:Class" xmi:id="_yhXj8LgxEeekTazOcBWwtg" name="Queue"/>
+>>>>>>> Stashed changes
 </uml:Model>
