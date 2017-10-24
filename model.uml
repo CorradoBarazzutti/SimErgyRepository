@@ -7,4 +7,5 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_lAE5QLgdEeekTazOcBWwtg" name="EmergencyDepartment"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_tYv0YLgdEeekTazOcBWwtg" name="HealthService"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_KTnUULg2EeeXI46qMZ41PQ" name="Physician"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_TkgCELkAEee5cP3UhRiu0g" name="Nurse"/>
 </uml:Model>
