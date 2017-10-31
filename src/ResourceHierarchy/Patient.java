@@ -18,7 +18,7 @@ import java.util.Random;
  * 
  * <p>
  * 
- * A patient is characterized by a name, surname, a unique ID, an health insurance (mutuelle) indicating whether the patient is insured or not, a severity level (i.e. either L1, L2, L3, L4, L5) a state (i.e. either waiting, being-visited, taking-exam, released, etc.), the arrival time (the time the patients has been reg- istered to the ED), a location (the physical place where he/she is located within the ED or any other department), the history (showing the history of each state/event together with the corresponding timestamp for the patient, e.g. (arrived, 19h10), (visited, 19h45), (x-ray, 20h05), (visited,20h30), etc). 
+ * A patient is characterized by a name, surname, a unique ID, an health insurance indicating whether the patient is insured or not, a severity level (i.e. either L1, L2, L3, L4, L5) a state (the event now occuring), the arrival time (the time the patients has been registered to the ED), a location (the physical place where he/she is located within the ED or any other department), the history (showing the history of each state/event. 
  * A patient’s operations include: setting of the arrival time, change of current state, change of location, updating the patient’s history with a new event, computation of a patient’s charges for the services taken “so-far”.
  */
 public class Patient extends HumanResource {
@@ -67,22 +67,52 @@ public class Patient extends HumanResource {
 		public String getName() {
 			return name;
 		}
-		public void setName(String name) {
-			this.name = name;
+		public void setName(String name) throws inexistentInsuranceExeption {
+			if (name == "no" || name == "silver" || name == "gold") {
+				this.name = name;
+				this.setDiscount();
+			}
+			else {
+				throw new inexistentInsuranceExeption();
+			}
 		}
 		public double getDiscount() {
 			return discount;
 		}
-		public void setDiscount(double discount) {
-			this.discount = discount;
+		private void setDiscount()  {
+			switch (this.name) {
+			case "no":
+				this.discount = 0;
+				break;
+			case "silver":
+				this.discount = 0.5;
+				break;
+			case "gold":
+				this.discount = 0.8;
+				break;
+			}
 		}
 		/**
-		 * Creates a default "no" insurance with 0 discount.
+		 * Creates a random insurance.
 		 */
-		//[TODO] need to make it random
 		public Insurance() {
-			this.setName("no");
-			this.setDiscount(0);
+			String type = null;
+			Random rnd = new Random();
+			switch (rnd.nextInt(2)) {
+			case 0:
+				type = "no";
+				break;
+			case 1:
+				type = "silver";
+				break;
+			case 2:
+				type = "gold";
+				break;
+			default:
+				break;
+			}
+			this.name = type;
+			this.setDiscount();
 		}
 		/**
 		 * Creates the insurance specified by the parameter passed.
@@ -93,19 +123,7 @@ public class Patient extends HumanResource {
 		 */
 		public Insurance(String name) throws inexistentInsuranceExeption {
 			this.setName(name);
-			switch (name) {
-				case "no":
-					setDiscount(0);
-					break;
-				case "silver":
-					setDiscount(0.5);
-					break;
-				case "gold":
-					setDiscount(0.8);
-					break;
-				default:
-					throw new inexistentInsuranceExeption();
-			}
+			this.setDiscount();
 		}
 	}
 	/**
@@ -116,7 +134,7 @@ public class Patient extends HumanResource {
 	 * There are five possible severity levels: L1 (resuscitation), L2 (Emergency), L3 (Urgent), L4 (Less urgent), L5 (non-urgent). 
 	 * [TODO] Each severity level is characterised by a (continuous) distribution of probability which is used to determine the arrival time of the next patient with a given level of severity. 
 	 */
-	private class SeverityLevel{
+	private class SeverityLevel {
 		/**
 		 * Indicates the level of severity with a number between 1 and 5
 		 */
@@ -145,7 +163,7 @@ public class Patient extends HumanResource {
 		}
 	}
 	
-	//attributes definition
+	//attributes
 	/**
 	 * Insurance level owned by the patient
 	 */
@@ -171,18 +189,21 @@ public class Patient extends HumanResource {
 	/**
 	 * returns a new patient with random caracteristics 
 	 */
+	
 	public Patient() {
 		//invocates the HumanResource constructor with random name and surnames 
 		super(
 			generateString(new Random(), "qwertyuiopasdfghjklzxcvbnm", new Random().nextInt(10) + 4), 
 			generateString(new Random(), "qwertyuiopasdfghjklzxcvbnm", new Random().nextInt(10) + 4)
 		);
-		try {
-			this.insurance = new Insurance("no");
+		try {	
+			this.insurance = new Insurance();
 		} catch (Exception e) {
 			System.out.println("inexistent insurance name");
 		}
-		this.severityLevel = new SeverityLevel(1);
+		this.severityLevel = new SeverityLevel();
+		this.state = null;
+		this.history = new ArrayList<Event>();
 	}
 	/**
 	 * returns a new patient with given caracteristics 
@@ -227,7 +248,9 @@ public class Patient extends HumanResource {
 	 * @param newState
 	 */
 	public void updateState(Event newState) {
-		this.history.add(this.state);
+		if (this.state != null) {
+			this.history.add(this.state);
+		}
 		this.state = newState;
 	}
 
@@ -250,6 +273,7 @@ public class Patient extends HumanResource {
 	    }
 	    return new String(text);
 	}
+	
 	/**
 	 * get arrival time
 	 * setting of the arrival time, 
@@ -259,5 +283,17 @@ public class Patient extends HumanResource {
 	 * updating the patient’s history with a new event, 
 	 * computation of a patient’s charges 
 	 */
+	/**
+	 * Returns the time the patients has been registered to the ED 
+	 * @return
+	 */
+	private Date getArrivalTime() {
+		for (Event event : history) {
+			if (event.getType() == "registration") {
+				return event.getTimeStamp();
+			}
+		}
+		return null;
+	}
 	
 }
