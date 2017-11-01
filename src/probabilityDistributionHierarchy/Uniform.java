@@ -2,7 +2,7 @@ package probabilityDistributionHierarchy;
 /**
  * 
  * @author Conrad
- *
+ * <p>
  * A uniform distribution is such that has constant probability of 1 / (upperbound - lowerbound) in the closed interval [lowerbound, upperbound] and zero elsewere.
  */
 public class Uniform extends ProbabilityDistribution {
@@ -28,13 +28,13 @@ public class Uniform extends ProbabilityDistribution {
 		return name;
 	}
 	/**
-	 * Returns the name of the distribution
+	 * Returns the first parameter of the distribution
 	 */
 	public double getLowerBound() {
 		return lowerBound;
 	}
 	/**
-	 * Returns the name of the distribution
+	 * Returns the second parameter of the distribution
 	 */
 	public double getUpperBound() {
 		return upperBound;

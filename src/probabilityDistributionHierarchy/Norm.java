@@ -1,5 +1,11 @@
 package probabilityDistributionHierarchy;
 
+/**
+ * 
+ * @author Conrad
+ * <p>
+ * The uniform distribution with parameter lowerbound, upperbound ∈ R, lowerbound < upperbound
+ */
 public class Norm extends ProbabilityDistribution {
 	//attributes
 	/**
@@ -14,6 +20,7 @@ public class Norm extends ProbabilityDistribution {
 	 * Parameter of the distribution: variance
 	 */
 	private double variance;
+	
 	//getters and setters
 	@Override
 	public String getName() {
@@ -25,6 +32,10 @@ public class Norm extends ProbabilityDistribution {
 	public double getVariance() {
 		return variance;
 	}
+	/**
+	 * Returns a sample from the distribution
+	 * @return
+	 */
 	@Override
 	public double getSample() {
 		return (rnd.nextGaussian() + mean) * variance * variance;
