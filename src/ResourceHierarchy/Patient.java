@@ -126,42 +126,6 @@ public class Patient extends HumanResource {
 			this.setDiscount();
 		}
 	}
-	/**
-	 * 
-	 * @author Conrad
-	 *
-	 * on arrival to the ED each patient is assigned a severity level. 
-	 * There are five possible severity levels: L1 (resuscitation), L2 (Emergency), L3 (Urgent), L4 (Less urgent), L5 (non-urgent). 
-	 * [TODO] Each severity level is characterised by a (continuous) distribution of probability which is used to determine the arrival time of the next patient with a given level of severity. 
-	 */
-	private class SeverityLevel {
-		/**
-		 * Indicates the level of severity with a number between 1 and 5
-		 */
-		private int level;
-
-		public int getLevel() {
-			return level;
-		}
-
-		public void setLevel(int level) {
-			this.level = level;
-		}
-		//creators
-		/**
-		 * Creates a severity level with random level
-		 */
-		public SeverityLevel() {
-			this.level = 5;
-			//[TODO]
-		}
-		/**
-		 * Creates a severity level with the specified level level
-		 */
-		public SeverityLevel(int level) {
-			this.level = level;
-		}
-	}
 	
 	//attributes
 	/**
@@ -274,20 +238,12 @@ public class Patient extends HumanResource {
 	    return new String(text);
 	}
 	
-	/**
-	 * get arrival time
-	 * setting of the arrival time, 
-	 * get location
-	 * change of current state, 
-	 * change of location, 
-	 * updating the patient’s history with a new event, 
-	 * computation of a patient’s charges 
-	 */
+
 	/**
 	 * Returns the time the patients has been registered to the ED 
 	 * @return
 	 */
-	private Date getArrivalTime() {
+	public Date getArrivalTime() {
 		for (Event event : history) {
 			if (event.getType() == "registration") {
 				return event.getTimeStamp();
@@ -295,5 +251,20 @@ public class Patient extends HumanResource {
 		}
 		return null;
 	}
-	
+	/**
+	 * Returns the current patient location in the ED
+	 * @return
+	 */
+	public Location getLocation() {
+		return state.getPlace();
+	}
+	/*
+	public calculateCharges() {
+		for (Event event : history) {
+			if (event istanceof service) {
+				
+			}
+		}
+	}
+	*/
 }
