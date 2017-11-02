@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 /**
  * 
- * @author Conrad
+ * @author
  *
  * Superclass of the event Hierarchy.
  * 
@@ -70,8 +70,6 @@ public abstract class Event {
 		this.usedResources = null;
 	}
 	
-
-
 	public Event(String type, Date timeStamp, Duration duration, Location place, int patientId, HashMap<String,Integer> nededResources, ArrayList<Integer> usedResources) {
 		this.type = type;
 		this.timeStamp = timeStamp;

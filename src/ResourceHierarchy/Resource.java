@@ -24,6 +24,7 @@ public abstract class Resource {
 	
 	
 	//getters and setters
+	
 	public String getName() {
 		return name;
 	}
@@ -37,8 +38,20 @@ public abstract class Resource {
 		this.iD = iD;
 	}
 	
+	//creators
+	
 	/**
-	 * Creates a resource with the given name and grants the iD to be unique 
+	 * Default creator: creates a resource and grants the iD to be unique 
+	 */
+	public Resource() {
+		setName(null);
+		setiD(iDcounter);
+		iDcounter+=1;
+	}
+	
+	/**
+	 * Creates a resource with the given name and grants the iD to be unique
+	 * @param Name
 	 */
 	public Resource(String Name) {
 		setName(Name);
@@ -46,6 +59,11 @@ public abstract class Resource {
 		iDcounter+=1;
 		}
 	
+	//object overrides
+	
+	/**
+	 * Resources are regarded as equal if they have the same iD
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Resource) {
@@ -56,6 +74,9 @@ public abstract class Resource {
 		return false;
 	}
 	
+	/**
+	 * The hash code is the iD
+	 */
 	@Override
 	public int hashCode() {
 		return this.iD;

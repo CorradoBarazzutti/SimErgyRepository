@@ -1,10 +1,10 @@
-package ResourceHierarchy;
+package test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class ResourceTest {
+public class PhysicianTest {
 
 	@Test
 	public void test() {
